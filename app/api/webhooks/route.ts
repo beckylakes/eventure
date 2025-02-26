@@ -2,6 +2,7 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 import { createUser } from "@/lib/actions/user.actions";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
@@ -68,11 +69,10 @@ export async function POST(req: Request) {
       lastName: last_name!,
       photo: image_url,
     };
-    
-    const newUser = await createUser(user)
+
+    const newUser = await createUser(user);
 
     if (newUser) {
-      console.log('almost there!')
       const clerk = await clerkClient();
       await clerk.users.updateUserMetadata(id, {
         publicMetadata: {
@@ -80,8 +80,31 @@ export async function POST(req: Request) {
         },
       });
     }
-    console.log('Result', newUser)
-    // return NextResponse.json({ message: "OK", user: newUser });
+    console.log("Result", newUser);
+    return NextResponse.json({ message: "OK", user: newUser });
+  }
+
+  if (eventType === "user.updated") {
+    const { id, image_url, first_name, last_name, username } = evt.data;
+
+    const user = {
+      firstName: first_name!,
+      lastName: last_name!,
+      username: username!,
+      photo: image_url,
+    };
+
+    const updatedUser = await updateUser(id, user);
+
+    return NextResponse.json({ message: "OK", user: updatedUser });
+  }
+
+  if (eventType === "user.deleted") {
+    const { id } = evt.data;
+
+    const deletedUser = await deleteUser(id!);
+
+    return NextResponse.json({ message: "OK", user: deletedUser });
   }
 
   return new Response("Webhook received", { status: 200 });
