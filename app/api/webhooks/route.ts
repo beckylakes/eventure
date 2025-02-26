@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { createUser } from "@/lib/actions/user.actions";
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
@@ -68,7 +69,7 @@ export async function POST(req: Request) {
       photo: image_url,
     };
     
-    console.log(user)
+    const newUser = await createUser(user)
 
     // const newUser = await createUser(user);
 
