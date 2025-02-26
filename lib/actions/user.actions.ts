@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { connectToDatabase } from "../mongodb/database";
+import { connectToDatabase } from "../mongodb/database/index";
 import User from "../mongodb/database/models/user.model";
 import Order from "../mongodb/database/models/order.model";
 import Event from "../mongodb/database/models/event.model";
