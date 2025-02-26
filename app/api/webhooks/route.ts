@@ -6,6 +6,7 @@ import { createUser, updateUser, deleteUser } from "../../../lib/actions/user.ac
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  console.log('Posting!')
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
 
   if (!SIGNING_SECRET) {
