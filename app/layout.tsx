@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark, neobrutalism } from "@clerk/themes";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,7 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: neobrutalism,
+        variables: { colorPrimary: '#705cf7' }
+      }}
+    >
       <html lang="en">
         <body className={`${poppins.variable} antialiased`}>{children}</body>
       </html>

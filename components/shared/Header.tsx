@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import NavItems from "./NavItems";
 import MobileNav from "./MobileNav";
@@ -12,8 +18,8 @@ const Header = () => {
         <Link href="/" className="w-36">
           <Image
             src="/assets/images/full-logo.svg"
-            width={0}
-            height={0}
+            width={128}
+            height={38}
             className="w-full h-auto"
             priority
             alt="Eventure logo"
@@ -28,14 +34,17 @@ const Header = () => {
 
         <div className="flex w-32 justify-end gap-3">
           <SignedIn>
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
             <MobileNav />
           </SignedIn>
 
           <SignedOut>
-            <Button asChild className="rounded-full" size="lg">
-              <Link href="/sign-in">Login / Signup</Link>
-            </Button>
+            <SignInButton>
+              <Button className="rounded-full" size="default">Login</Button>
+            </SignInButton>
+            <SignUpButton>
+              <Button className="rounded-full" size="default">Sign Up</Button>
+            </SignUpButton>
           </SignedOut>
         </div>
       </div>
