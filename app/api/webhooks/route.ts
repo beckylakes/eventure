@@ -2,10 +2,11 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 
-import { createUser, updateUser, deleteUser } from "../../../../lib/actions/user.actions";
+import { createUser, updateUser, deleteUser } from "../../../lib/actions/user.actions";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  console.log('In Webhook POST request')
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
 
   if (!SIGNING_SECRET) {
@@ -58,6 +59,7 @@ export async function POST(req: Request) {
   console.log("Webhook payload:", body);
 
   if (eventType === "user.created") {
+    console.log('User being created...')
     const { id, email_addresses, image_url, first_name, last_name, username } =
       evt.data;
 
