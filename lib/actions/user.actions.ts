@@ -11,11 +11,11 @@ import { CreateUserParams, UpdateUserParams } from "@/types";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
-    console.log(`In User Actions, creating ${user}`)
-    console.log(user)
     await connectToDatabase();
     const newUser = await User.create(user);
-
+    console.log('1',newUser)
+    console.log('2', JSON.stringify(newUser))
+    console.log('3', JSON.parse(JSON.stringify(newUser)))
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
     handleError(error);
