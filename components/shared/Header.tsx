@@ -18,8 +18,8 @@ const Header = () => {
         <Link href="/" className="w-36">
           <Image
             src="/assets/images/full-logo.svg"
-            width={128}
-            height={38}
+            width="0"
+            height="0"
             className="w-full h-auto"
             priority
             alt="Eventure logo"

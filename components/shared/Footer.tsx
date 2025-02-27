@@ -9,8 +9,9 @@ const Footer = () => {
           <Image
             src="/assets/images/full-logo.svg"
             alt="logo"
-            width={128}
-            height={38}
+            width="0"
+            height="0"
+            className="w-auto h-auto max-w-[120px]"
           />
         </Link>
         <p>&#169; 2025 Eventure. All Rights reserved.</p>
