@@ -5,7 +5,7 @@ const CreateEvent = async () => {
     const authorise = await auth();
     const { sessionClaims } = authorise;
 
-    const userId = sessionClaims?.sub as string;
+    const userId = sessionClaims?.userId as string;
 
   return (
     <>
