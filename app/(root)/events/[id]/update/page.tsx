@@ -9,7 +9,7 @@ type UpdateEventProps = {
 };
 
 const UpdateEvent = async ({ params }: UpdateEventProps) => {
-  const { id } = await params;
+  const { id } = params;
   const authorise = await auth();
   const { sessionClaims } = authorise;
 

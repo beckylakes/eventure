@@ -4,7 +4,7 @@ import { SearchParamProps } from "@/types";
 import Image from "next/image";
 
 const EventDetails = async ({ params }: SearchParamProps) => {
-  const { id } = await params;
+  const { id } = params;
   const event = await getEventById(id);
 
   return (
