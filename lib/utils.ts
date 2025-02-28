@@ -56,8 +56,9 @@ export const formatPrice = (price: string) => {
   return formattedPrice
 }
 
-export function formUrlQuery({ params, key, value }: UrlQueryParams) {
-  const currentUrl = qs.parse(params)
+export async function formUrlQuery({ params, key, value }: UrlQueryParams) {
+  const finalParams = await params;
+  const currentUrl = qs.parse(finalParams)
 
   currentUrl[key] = value
 
@@ -70,8 +71,9 @@ export function formUrlQuery({ params, key, value }: UrlQueryParams) {
   )
 }
 
-export function removeKeysFromQuery({ params, keysToRemove }: RemoveUrlQueryParams) {
-  const currentUrl = qs.parse(params)
+export async function removeKeysFromQuery({ params, keysToRemove }: RemoveUrlQueryParams) {
+  const finalParams = await params;
+  const currentUrl = qs.parse(finalParams)
 
   keysToRemove.forEach(key => {
     delete currentUrl[key]
