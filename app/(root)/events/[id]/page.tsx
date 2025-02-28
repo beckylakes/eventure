@@ -48,6 +48,8 @@ const EventDetails = async (props: SearchParamProps) => {
               </div>
             </div>
             {/*CHECKOUT BUTTON*/}
+
+            
             <div className="flex flex-col gap-5">
               <div className="flex gap-2 md:gap-3">
                 <Image
