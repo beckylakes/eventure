@@ -1,6 +1,5 @@
 "use server";
 
-// import { stripe } from '../../lib'
 import Stripe from 'stripe'
 import {
   CheckoutOrderParams,
@@ -8,8 +7,6 @@ import {
   GetOrdersByEventParams,
   GetOrdersByUserParams,
 } from "@/types";
-import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { handleError } from "../utils";
 import { connectToDatabase } from "../mongodb/database/index";
