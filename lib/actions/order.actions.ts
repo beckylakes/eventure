@@ -1,6 +1,6 @@
 "use server";
 
-import Stripe from 'stripe'
+import Stripe from "stripe";
 import {
   CheckoutOrderParams,
   CreateOrderParams,
@@ -15,15 +15,14 @@ import Event from "../mongodb/database/models/event.model";
 import User from "../mongodb/database/models/user.model";
 import { ObjectId } from "mongodb";
 
-
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const price = order.isFree ? 0 : Number(order.price) * 100;
   try {
-    const headersList = await headers()
+    const headersList = await headers();
 
     const session = await stripe.checkout.sessions.create({
-        line_items: [
+      line_items: [
         {
           price_data: {
             currency: "usd",
@@ -47,9 +46,8 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
     if (session.url) {
       return session.url;
     }
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 

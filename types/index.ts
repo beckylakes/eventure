@@ -133,13 +133,13 @@ export type CreateUserParams = {
   
   // ====== URL QUERY PARAMS
   export type UrlQueryParams = {
-    params: Promise<string>;
+    params: string
     key: string
     value: string | null
   }
   
   export type RemoveUrlQueryParams = {
-    params: Promise<string>;
+    params: string
     keysToRemove: string[]
   }
   
