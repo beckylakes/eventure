@@ -3,17 +3,22 @@ import { models, model, Schema, Document } from "mongoose";
 export interface IEvent extends Document {
   _id: string;
   title: string;
+  name: string;
   description?: string;
   location?: string;
   createdAt: Date;
   imageUrl: string;
+  images: { url: string }[];
   startDateTime: Date;
   endDateTime: Date;
+  dates: { start: { dateTime: Date } };
   price: string;
+  priceRanges: {min: string }[]
   isFree: boolean;
   url?: string;
   category: { _id: string; name: string };
-  organizer: { _id: string; firstName: string, lastName: string };
+  classifications: { genre: { name: string } }[];
+  organizer: { _id: string; firstName: string; lastName: string };
 }
 
 const EventSchema = new Schema({

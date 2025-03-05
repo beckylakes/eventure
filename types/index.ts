@@ -61,6 +61,7 @@ export type CreateUserParams = {
     category: string
     limit: number
     page: number
+    currentTmEventId: string
   }
   
   export type GetEventsByUserParams = {
@@ -70,8 +71,9 @@ export type CreateUserParams = {
   }
   
   export type GetRelatedEventsByCategoryParams = {
-    categoryId: string
+    categoryName: string
     eventId: string
+    tmEventId: string
     limit?: number
     page: number | string
   }

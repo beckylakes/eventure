@@ -7,6 +7,16 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'vtmgwotolt.ufs.sh',
         port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 's1.ticketm.net',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.universe.com',
+        port: ''
       }
     ]
   }

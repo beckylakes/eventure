@@ -7,15 +7,15 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import Checkout from "./Checkout";
 
-const CheckoutButton = ({ event }: { event: IEvent }) => {
+const CheckoutButton = ({ event }: { event: IEvent; }) => {
   const { user } = useUser();
   const userId = user?.publicMetadata.userId as string;
-  const hasEnded = new Date(event.startDateTime) < new Date();
-  console.log('endDateTime:', new Date(event.endDateTime), new Date())
+  const hasEnded = new Date(event.startDateTime) < new Date()
+
   return (
   <div className="flex items-center gap-3">
     {hasEnded ? (
-        <p className="p-2 text-red-400">Sorry, this event is no longer available.</p>
+        <p className="p-2 text-red-400">Sorry, tickets for this event are no longer available</p>
     ) : (
         <>
         <SignedOut>

@@ -1,20 +1,43 @@
+
 import CategoryFilter from "@/components/shared/CategoryFilter";
 import Collection from "@/components/shared/Collection";
 import Search from "@/components/shared/Search";
 import { Button } from "@/components/ui/button";
-import { getAllEvents } from "@/lib/actions/event.actions";
+import { getAllTMEvents, getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home(props: SearchParamProps) {
   const finalSearchParams = await props.searchParams;
 
   const page = Number(finalSearchParams?.page) || 1;
-  const searchText = (finalSearchParams?.query as string) || '';
-  const category = (finalSearchParams?.category as string) || '';
+  const searchText = (finalSearchParams?.query as string) || "";
+  const category = (finalSearchParams?.category as string) || "";
 
-  const events = await getAllEvents({query: searchText, category: category, page: page, limit: 6});
+  const events = await getAllEvents({
+    query: searchText,
+    category: category,
+    page: page,
+    limit: 6,
+    currentTmEventId: ""
+  });
+
+  const eventsTM = await getAllTMEvents({
+    query: searchText,
+    category: category,
+    page: page,
+    limit: 6,
+    currentTmEventId: ""
+  });
+
+  const formattedTotalPages = events?.totalPages + eventsTM?.totalPages as number;
+  const allEvents = [...events?.data, ...eventsTM?.data]
+
+  const sortedEvents = allEvents.sort((a, b) => {
+    const dateA = new Date(a.startDateTime || a.dates?.start?.dateTime).getTime();
+    const dateB = new Date(b.startDateTime || b.dates?.start?.dateTime).getTime();
+    return dateA - dateB;
+  });
 
   return (
     <>
@@ -48,13 +71,26 @@ export default async function Home(props: SearchParamProps) {
           </div>
         </div>
       </section>
-      <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
-        <h2 className="h2-bold">Trusted by <br/> Thousands</h2>
+      <section
+        id="events"
+        className="wrapper my-8 flex flex-col gap-8 md:gap-12"
+      >
+        <h2 className="h2-bold">
+          Trusted by <br /> Thousands
+        </h2>
         <div className="flex w-full flex-col gap-5 md:flex-row">
           <Search />
           <CategoryFilter />
         </div>
-        <Collection data={events?.data} emptyTitle="No Events Found" emptyStateSubtext="Come back later" collectionType="All_Events" limit={6} page={page} totalPages={events?.totalPages}/>
+        <Collection
+          data={sortedEvents}
+          emptyTitle="No Events Found"
+          emptyStateSubtext="Come back later"
+          collectionType="All_Events"
+          limit={6}
+          page={page}
+          totalPages={formattedTotalPages}
+        />
       </section>
     </>
   );
