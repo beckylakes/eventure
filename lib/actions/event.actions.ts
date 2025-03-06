@@ -61,7 +61,7 @@ export async function getEventById(eventId: string) {
 
     const event = await populateEvent(Event.findById(eventId));
 
-    if (!event) throw new Error("Event not found");
+    if (!event) return {error : {status: 404, message: "The event you are looking for cannot be found"}};
 
     return JSON.parse(JSON.stringify(event));
   } catch (error) {
@@ -112,8 +112,10 @@ export async function getAllEvents({
   category,
 }: GetAllEventsParams) {
   try {
+
     await connectToDatabase();
     const now = new Date();
+
     const titleCondition = query
       ? { title: { $regex: query, $options: "i" } }
       : {};
@@ -231,7 +233,6 @@ export async function getAllTMEvents({
   currentTmEventId
 }: GetAllEventsParams) {
   try {
-    console.log("Fetching events from Ticketmaster API...");
     if(category === "Other") category = "Music"
 
     const now = new Date();
@@ -244,7 +245,7 @@ export async function getAllTMEvents({
     const params = new URLSearchParams({
       keyword: query,
       sort: "date,name,asc",
-      city: "london",
+      city: "",
       startDateTime: formattedNow,
       size: limit.toString(),
       page: page.toString(),
@@ -258,7 +259,6 @@ export async function getAllTMEvents({
 
     if (!data._embedded) return { data: [], totalPages: 0 };
 
-    // Filter out the current event from the API results
     const filteredEvents = data._embedded.events.filter(
       (event: any) => event.id !== currentTmEventId
     );
@@ -277,19 +277,17 @@ export async function getAllTMEvents({
 // GET TM EVENT BY ID
 export async function getTMEventById(eventId: string) {
   try {
-    console.log(`Fetching event with ${eventId}...`);
     const apiKey = process.env.TICKETMASTER_API_KEY;
 
     const response = await fetch(
       `https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${apiKey}`
     );
 
-    if(!response.ok) console.log('Oops')
+    if(!response.ok) return {error : {status: 404, message: "The event you are looking for cannot be found"}};
     const data = await response.json();
 
     return data || [];
   } catch (error) {
-    console.error("Oops! Failed to fetch event:", error);
     handleError(error)
   }
 }

@@ -6,7 +6,7 @@ import { Input } from "../ui/input";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const Search = ({placeholder = 'Search event...'}: {placeholder?: string}) => {
+const Search = ({placeholder = 'Search by artist, location, month...'}: {placeholder?: string}) => {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
