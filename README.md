@@ -31,10 +31,10 @@ Find my live webpage [here](https://eventure-rouge.vercel.app).
 * **Authentication and CRUD functionality with Clerk:** full user management, ensuring secure and efficient authentication
 
 * **Events (CRUD):** Fully comprehensive funtionality to create, read, update, and delete events, giving users full control over events made on Eventure.
-- **Create Events:** Users can easily create new events, providing essential details such as title, date, location, and any additional information.
-- **Read Events:** Seamless access to a detailed view of all events, allowing users to explore event specifics, including descriptions, schedules, and related information.
-- **Update Events:** Empowering users to modify event details dynamically, ensuring that event information remains accurate and up-to-date.
-- **Delete Events:** A straightforward process for removing events from the system, giving organisers the ability to manage and curate the platform effectively.
+        - **Create Events:** Users can easily create new events, providing essential details such as title, date, location, and any additional information.
+        - **Read Events:** Seamless access to a detailed view of all events, allowing users to explore event specifics, including descriptions, schedules, and related information.
+        - **Update Events:** Empowering users to modify event details dynamically, ensuring that event information remains accurate and up-to-date.
+        - **Delete Events:** A straightforward process for removing events from the system, giving organisers the ability to manage and curate the platform effectively.
 
 * **Related Events:** Connects events that are related and displaying on the event details page, making it more engaging for users
     
