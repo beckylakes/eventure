@@ -3,19 +3,32 @@ import { getOrdersByEvent } from "@/lib/actions/order.actions";
 import { formatDateTime, formatPrice } from "@/lib/utils";
 import { SearchParamProps } from "@/types";
 import { IOrderItem } from "@/lib/mongodb/database/models/order.model";
+import { auth } from "@clerk/nextjs/server";
+import { getEventById } from "@/lib/actions/event.actions";
+import Error from "@/components/shared/Error";
 
 const Orders = async (props: SearchParamProps) => {
   const finalSearchParams = await props.searchParams;
+  const authorise = await auth();
+  const { sessionClaims } = authorise;
+
+  const userId = sessionClaims?.userId as string;
 
   const eventId = (finalSearchParams?.eventId as string) || "";
   const searchText = (finalSearchParams?.query as string) || "";
+
+  const event = await getEventById(eventId);
+
+  if (event.organizer._id !== userId) {
+    return <Error status={403} message="You do not have permission to view this page" />;
+  }
 
   const orders = await getOrdersByEvent({ eventId, searchString: searchText });
 
   return (
     <>
-      <section className=" bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
-        <h3 className="wrapper h3-bold text-center sm:text-left ">Orders</h3>
+      <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
+        <h3 className="wrapper h3-bold text-center sm:text-left">Orders</h3>
       </section>
 
       <section className="wrapper mt-8">
@@ -48,7 +61,7 @@ const Orders = async (props: SearchParamProps) => {
                   orders.map((row: IOrderItem) => (
                     <tr
                       key={row._id}
-                      className="p-regular-14 lg:p-regular-16 border-b "
+                      className="p-regular-14 lg:p-regular-16 border-b"
                       style={{ boxSizing: "border-box" }}
                     >
                       <td className="min-w-[250px] py-4 text-primary-500">
